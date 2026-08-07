@@ -4,704 +4,186 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>台股技術分析計算器</title>
-
 <style>
-body {
-  font-family: Arial, "Microsoft JhengHei", sans-serif;
-  background: #f5f6f8;
-  margin: 0;
-  padding: 20px;
-  color: #222;
-}
-
-.container {
-  max-width: 950px;
-  margin: auto;
-  background: white;
-  padding: 25px;
-  border-radius: 16px;
-  box-shadow: 0 3px 15px rgba(0,0,0,0.08);
-}
-
-h1 {
-  text-align: center;
-  margin-bottom: 25px;
-}
-
-h2 {
-  margin-top: 5px;
-}
-
-.tabs {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 25px;
-}
-
-.tab {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 8px;
-  background: #eeeeee;
-  cursor: pointer;
-  font-size: 15px;
-}
-
-.tab.active {
-  background: #333;
-  color: white;
-}
-
-.section {
-  display: none;
-}
-
-.section.active {
-  display: block;
-}
-
-.input-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-}
-
-label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: bold;
-}
-
-input {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 12px;
-  font-size: 18px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-
-.results {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 12px;
-  margin-top: 20px;
-}
-
-.card {
-  background: #f7f7f7;
-  padding: 16px;
-  border-radius: 10px;
-}
-
-.card-title {
-  font-size: 14px;
-  color: #666;
-}
-
-.number {
-  font-size: 25px;
-  font-weight: bold;
-  margin-top: 7px;
-}
-
-.note {
-  color: #777;
-  font-size: 14px;
-  margin-top: 8px;
-}
-
-.price-diff {
-  margin-top: 15px;
-  padding: 14px;
-  background: #f1f3f5;
-  border-radius: 10px;
-  font-weight: bold;
-}
-
-.market-grid,
-.stock-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-}
-
-.calc-box {
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 18px;
-}
-
-.calc-box h3 {
-  margin-top: 0;
-  font-size: 21px;
-}
-
-.support-title {
-  border-left: 5px solid #555;
-  padding-left: 10px;
-}
-
-.pressure-title {
-  border-left: 5px solid #999;
-  padding-left: 10px;
-}
-
-.calc-box .results {
-  grid-template-columns: 1fr;
-}
-
-@media (max-width: 650px) {
-
-  body {
-    padding: 10px;
-  }
-
-  .container {
-    padding: 16px;
-  }
-
-  .input-grid,
-  .market-grid,
-  .stock-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .results {
-    grid-template-columns: 1fr;
-  }
-
-  .tab {
-    flex: 1 1 45%;
-    font-size: 14px;
-    padding: 10px 8px;
-  }
+body { font-family: Arial, "Microsoft JhengHei", sans-serif; background:#f5f6f8; margin:0; padding:20px; color:#222; }
+.container { max-width:950px; margin:auto; background:white; padding:25px; border-radius:16px; box-shadow:0 3px 15px rgba(0,0,0,0.08); }
+h1 { text-align:center; margin-bottom:25px; }
+h2 { margin-top:5px; }
+.tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:25px; }
+.tab { padding:10px 15px; border:none; border-radius:8px; background:#eeeeee; cursor:pointer; font-size:15px; }
+.tab.active { background:#333; color:white; }
+.section { display:none; }
+.section.active { display:block; }
+.input-grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
+label { display:block; margin-bottom:6px; font-weight:bold; }
+input { width:100%; box-sizing:border-box; padding:12px; font-size:18px; border:1px solid #ccc; border-radius:8px; }
+.results { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:20px; }
+.card { background:#f7f7f7; padding:16px; border-radius:10px; }
+.card-title { font-size:14px; color:#666; }
+.number { font-size:25px; font-weight:bold; margin-top:7px; }
+.note { color:#777; font-size:14px; margin-top:8px; }
+.price-diff { margin-top:15px; padding:14px; background:#f1f3f5; border-radius:10px; font-weight:bold; }
+.market-grid,.stock-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.calc-box { border:1px solid #ddd; border-radius:12px; padding:18px; }
+.calc-box h3 { margin-top:0; font-size:21px; }
+.support-title { border-left:5px solid #555; padding-left:10px; }
+.pressure-title { border-left:5px solid #999; padding-left:10px; }
+.calc-box .results { grid-template-columns:1fr; }
+@media (max-width:650px) {
+ body { padding:10px; }
+ .container { padding:16px; }
+ .input-grid,.market-grid,.stock-grid { grid-template-columns:1fr; }
+ .results { grid-template-columns:1fr; }
+ .tab { flex:1 1 45%; font-size:14px; padding:10px 8px; }
 }
 </style>
 </head>
-
 <body>
-
 <div class="container">
-
 <h1>台股技術分析計算器</h1>
 
 <div class="tabs">
 <button class="tab active" onclick="showTab('three',this)">三關價</button>
 <button class="tab" onclick="showTab('market',this)">大盤的支撐與壓力</button>
 <button class="tab" onclick="showTab('stock',this)">個股的支撐與壓力</button>
-<button class="tab" onclick="showTab('third',this)">三分之一／三分之二</button>
-<button class="tab" onclick="showTab('open',this)">開盤價的 2%／5%</button>
+<button class="tab" onclick="showTab('third',this)">買股 三分之一／三分之二</button>
+<button class="tab" onclick="showTab('open',this)">賣股 開盤價的 2%／5%</button>
 </div>
-
-
-<!-- ① 三關價 -->
 
 <div id="three" class="section active">
-
 <h2>三關價計算</h2>
 <p>基數 1.382・輸入波段最高與最低價</p>
-
 <div class="input-grid">
-
-<div>
-<label>最高價 (H)</label>
-<input id="threeH" type="number" step="any" oninput="calcThree()">
+<div><label>最高價 (H)</label><input id="threeH" type="number" step="any" oninput="calcThree()"></div>
+<div><label>最低價 (L)</label><input id="threeL" type="number" step="any" oninput="calcThree()"></div>
 </div>
-
-<div>
-<label>最低價 (L)</label>
-<input id="threeL" type="number" step="any" oninput="calcThree()">
-</div>
-
-</div>
-
 <div class="results">
-
-<div class="card">
-<div class="card-title">中關</div>
-<div class="number" id="middle">—</div>
-</div>
-
-<div class="card">
-<div class="card-title">上關</div>
-<div class="number" id="upper">—</div>
-</div>
-
-<div class="card">
-<div class="card-title">下關</div>
-<div class="number" id="lower">—</div>
-</div>
-
+<div class="card"><div class="card-title">中關</div><div class="number" id="middle">—</div></div>
+<div class="card"><div class="card-title">上關</div><div class="number" id="upper">—</div></div>
+<div class="card"><div class="card-title">下關</div><div class="number" id="lower">—</div></div>
 </div>
 </div>
-
-
-<!-- ② 大盤的支撐與壓力 -->
 
 <div id="market" class="section">
-
 <h2>大盤的支撐與壓力</h2>
-
 <div class="market-grid">
-
-
-<!-- 大盤支撐 -->
-
 <div class="calc-box">
-
 <h3 class="support-title">支撐</h3>
-
-<div>
-<label>波段高點</label>
-<input id="marketSupportH" type="number" step="any"
-       oninput="calcMarketSupport()">
-</div>
-
-<br>
-
-<div>
-<label>波段低點</label>
-<input id="marketSupportL" type="number" step="any"
-       oninput="calcMarketSupport()">
-</div>
-
-<div class="price-diff">
-價差：
-<span id="marketSupportDiff">—</span>
-</div>
-
+<div><label>波段高點</label><input id="marketSupportH" type="number" step="any" oninput="calcMarketSupport()"></div><br>
+<div><label>波段低點</label><input id="marketSupportL" type="number" step="any" oninput="calcMarketSupport()"></div>
+<div class="price-diff">價差：<span id="marketSupportDiff">—</span></div>
 <div class="results">
-
-<div class="card">
-<div class="card-title">支撐 0.318</div>
-<div class="number" id="marketS318">—</div>
-</div>
-
-<div class="card">
-<div class="card-title">支撐 0.500</div>
-<div class="number" id="marketS50">—</div>
-</div>
-
-<div class="card">
-<div class="card-title">支撐 0.618</div>
-<div class="number" id="marketS618">—</div>
-</div>
-
-</div>
-</div>
-
-
-<!-- 大盤壓力 -->
-
+<div class="card"><div class="card-title">支撐 0.318</div><div class="number" id="marketS318">—</div></div>
+<div class="card"><div class="card-title">支撐 0.500</div><div class="number" id="marketS50">—</div></div>
+<div class="card"><div class="card-title">支撐 0.618</div><div class="number" id="marketS618">—</div></div>
+</div></div>
 <div class="calc-box">
-
 <h3 class="pressure-title">壓力</h3>
-
-<div>
-<label>波段高點</label>
-<input id="marketPressureH" type="number" step="any"
-       oninput="calcMarketPressure()">
-</div>
-
-<br>
-
-<div>
-<label>波段低點</label>
-<input id="marketPressureL" type="number" step="any"
-       oninput="calcMarketPressure()">
-</div>
-
-<div class="price-diff">
-價差：
-<span id="marketPressureDiff">—</span>
-</div>
-
+<div><label>波段高點</label><input id="marketPressureH" type="number" step="any" oninput="calcMarketPressure()"></div><br>
+<div><label>波段低點</label><input id="marketPressureL" type="number" step="any" oninput="calcMarketPressure()"></div>
+<div class="price-diff">價差：<span id="marketPressureDiff">—</span></div>
 <div class="results">
-
-<div class="card">
-<div class="card-title">壓力 0.382</div>
-<div class="number" id="marketP382">—</div>
-</div>
-
-<div class="card">
-<div class="card-title">壓力 0.500</div>
-<div class="number" id="marketP50">—</div>
-</div>
-
-<div class="card">
-<div class="card-title">壓力 0.682</div>
-<div class="number" id="marketP682">—</div>
-</div>
-
-</div>
-</div>
-
-</div>
-</div>
-
-
-<!-- ③ 個股的支撐與壓力 -->
+<div class="card"><div class="card-title">壓力 0.382</div><div class="number" id="marketP382">—</div></div>
+<div class="card"><div class="card-title">壓力 0.500</div><div class="number" id="marketP50">—</div></div>
+<div class="card"><div class="card-title">壓力 0.682</div><div class="number" id="marketP682">—</div></div>
+</div></div>
+</div></div>
 
 <div id="stock" class="section">
-
 <h2>個股的支撐與壓力</h2>
-
 <div class="stock-grid">
-
-
-<!-- 個股支撐 -->
-
 <div class="calc-box">
-
 <h3 class="support-title">個股支撐</h3>
-
-<label>高點 A</label>
-<input id="stockHigh" type="number" step="any"
-       oninput="calcStockSupport()">
-
+<label>高點 A</label><input id="stockHigh" type="number" step="any" oninput="calcStockSupport()">
 <div class="results">
-
-<div class="card">
-<div class="card-title">支撐 0.318</div>
-<div class="number" id="stockS318">—</div>
-</div>
-
-<div class="card">
-<div class="card-title">支撐 0.500</div>
-<div class="number" id="stockS50">—</div>
-</div>
-
-<div class="card">
-<div class="card-title">支撐 0.618</div>
-<div class="number" id="stockS618">—</div>
-</div>
-
-</div>
-</div>
-
-
-<!-- 個股壓力 -->
-
+<div class="card"><div class="card-title">支撐 0.318</div><div class="number" id="stockS318">—</div></div>
+<div class="card"><div class="card-title">支撐 0.500</div><div class="number" id="stockS50">—</div></div>
+<div class="card"><div class="card-title">支撐 0.618</div><div class="number" id="stockS618">—</div></div>
+</div></div>
 <div class="calc-box">
-
 <h3 class="pressure-title">個股壓力</h3>
-
-<label>低點 B</label>
-<input id="stockLow" type="number" step="any"
-       oninput="calcStockPressure()">
-
+<label>低點 B</label><input id="stockLow" type="number" step="any" oninput="calcStockPressure()">
 <div class="results">
-
-<div class="card">
-<div class="card-title">壓力 0.682</div>
-<div class="number" id="stockP682">—</div>
-</div>
-
-<div class="card">
-<div class="card-title">壓力 0.500</div>
-<div class="number" id="stockP50">—</div>
-</div>
-
-<div class="card">
-<div class="card-title">壓力 0.382</div>
-<div class="number" id="stockP382">—</div>
-</div>
-
-</div>
-</div>
-
-</div>
-</div>
-
-
-<!-- ④ 三分之一／三分之二 -->
+<div class="card"><div class="card-title">壓力 0.682</div><div class="number" id="stockP682">—</div></div>
+<div class="card"><div class="card-title">壓力 0.500</div><div class="number" id="stockP50">—</div></div>
+<div class="card"><div class="card-title">壓力 0.382</div><div class="number" id="stockP382">—</div></div>
+</div></div>
+</div></div>
 
 <div id="third" class="section">
-
 <h2>三分之一／三分之二位置</h2>
-
 <p>輸入波段最高價與最低價，自動計算分割位置</p>
-
 <div class="input-grid">
-
-<div>
-<label>最高價</label>
-<input id="thirdH" type="number" step="any"
-       oninput="calcThird()">
+<div><label>最高價</label><input id="thirdH" type="number" step="any" oninput="calcThird()"></div>
+<div><label>最低價</label><input id="thirdL" type="number" step="any" oninput="calcThird()"></div>
 </div>
-
-<div>
-<label>最低價</label>
-<input id="thirdL" type="number" step="any"
-       oninput="calcThird()">
-</div>
-
-</div>
-
 <div class="results">
-
-<div class="card">
-<div class="card-title">三分之一位置</div>
-<div class="number" id="oneThird">—</div>
-<div class="note">
-最低價＋（最高價－最低價）× 1/3
-</div>
-</div>
-
-<div class="card">
-<div class="card-title">三分之二位置</div>
-<div class="number" id="twoThird">—</div>
-<div class="note">
-最低價＋（最高價－最低價）× 2/3
-</div>
-</div>
-
-</div>
-</div>
-
-
-<!-- ⑤ 開盤價的 2% / 5% -->
+<div class="card"><div class="card-title">三分之一位置</div><div class="number" id="oneThird">—</div><div class="note">最低價＋（最高價－最低價）× 1/3</div></div>
+<div class="card"><div class="card-title">三分之二位置</div><div class="number" id="twoThird">—</div><div class="note">最低價＋（最高價－最低價）× 2/3</div></div>
+</div></div>
 
 <div id="open" class="section">
-
-<h2>開盤價的 2%／5%</h2>
-
-<p>昨天盤中最高價 − 昨天盤中最低價 ＝ 價差</p>
-
+<h2>賣股 開盤價的 2%／5%</h2>
+<p>輸入昨天的收盤價，自動計算 2% 與 5%</p>
 <div class="input-grid">
-
-<div>
-<label>昨天盤中最高價</label>
-<input id="openHigh" type="number" step="any"
-       oninput="calcOpen()">
+<div><label>昨天的收盤價</label><input id="openClose" type="number" step="any" oninput="calcOpen()"></div>
 </div>
-
-<div>
-<label>昨天盤中最低價</label>
-<input id="openLow" type="number" step="any"
-       oninput="calcOpen()">
-</div>
-
-</div>
-
 <div class="results">
-
-<div class="card">
-<div class="card-title">昨日價差</div>
-<div class="number" id="openDiff">—</div>
+<div class="card"><div class="card-title">昨天的收盤價 × 2%（A）</div><div class="number" id="open2">—</div></div>
+<div class="card"><div class="card-title">昨天的收盤價 × 5%（B）</div><div class="number" id="open5">—</div></div>
+</div></div>
 </div>
-
-<div class="card">
-<div class="card-title">價差 × 2%（A）</div>
-<div class="number" id="open2">—</div>
-</div>
-
-<div class="card">
-<div class="card-title">價差 × 5%（B）</div>
-<div class="number" id="open5">—</div>
-</div>
-
-</div>
-</div>
-
-
-</div>
-
 
 <script>
-
-function num(id) {
-  return parseFloat(document.getElementById(id).value);
+function num(id){ return parseFloat(document.getElementById(id).value); }
+function show(id,value){ document.getElementById(id).textContent = Number.isFinite(value) ? value.toFixed(2) : "—"; }
+function clearShows(ids){ ids.forEach(id => { document.getElementById(id).textContent = "—"; }); }
+function showTab(id,button){
+ document.querySelectorAll(".section").forEach(x => x.classList.remove("active"));
+ document.querySelectorAll(".tab").forEach(x => x.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ button.classList.add("active");
 }
-
-function show(id,value) {
-  document.getElementById(id).textContent =
-    Number.isFinite(value) ? value.toFixed(2) : "—";
+function calcThree(){
+ const H=num("threeH"), L=num("threeL");
+ if(!Number.isFinite(H)||!Number.isFinite(L)){clearShows(["middle","upper","lower"]);return;}
+ const middle=(H+L)/2, range=H-L;
+ show("middle",middle); show("upper",middle+range*0.382); show("lower",middle-range*0.382);
 }
-
-function clearShows(ids) {
-  ids.forEach(id => {
-    document.getElementById(id).textContent = "—";
-  });
+function calcMarketSupport(){
+ const H=num("marketSupportH"), L=num("marketSupportL");
+ if(!Number.isFinite(H)||!Number.isFinite(L)){clearShows(["marketSupportDiff","marketS318","marketS50","marketS618"]);return;}
+ const diff=H-L;
+ show("marketSupportDiff",diff); show("marketS318",H-diff*0.318); show("marketS50",H-diff*0.5); show("marketS618",H-diff*0.618);
 }
-
-function showTab(id,button) {
-
-  document.querySelectorAll(".section").forEach(x =>
-    x.classList.remove("active")
-  );
-
-  document.querySelectorAll(".tab").forEach(x =>
-    x.classList.remove("active")
-  );
-
-  document.getElementById(id).classList.add("active");
-  button.classList.add("active");
+function calcMarketPressure(){
+ const H=num("marketPressureH"), L=num("marketPressureL");
+ if(!Number.isFinite(H)||!Number.isFinite(L)){clearShows(["marketPressureDiff","marketP382","marketP50","marketP682"]);return;}
+ const diff=H-L;
+ show("marketPressureDiff",diff); show("marketP382",L+diff*0.382); show("marketP50",L+diff*0.5); show("marketP682",L+diff*0.682);
 }
-
-
-/* ① 三關價 */
-
-function calcThree() {
-
-  const H = num("threeH");
-  const L = num("threeL");
-
-  if (!Number.isFinite(H) || !Number.isFinite(L)) {
-    clearShows(["middle","upper","lower"]);
-    return;
-  }
-
-  const middle = (H + L) / 2;
-  const range = H - L;
-
-  show("middle",middle);
-  show("upper",middle + range * 0.382);
-  show("lower",middle - range * 0.382);
+function calcStockSupport(){
+ const A=num("stockHigh");
+ if(!Number.isFinite(A)){clearShows(["stockS318","stockS50","stockS618"]);return;}
+ show("stockS318",A-A*0.318); show("stockS50",A-A*0.5); show("stockS618",A-A*0.618);
 }
-
-
-/* ② 大盤支撐 */
-
-function calcMarketSupport() {
-
-  const H = num("marketSupportH");
-  const L = num("marketSupportL");
-
-  if (!Number.isFinite(H) || !Number.isFinite(L)) {
-    clearShows([
-      "marketSupportDiff",
-      "marketS318",
-      "marketS50",
-      "marketS618"
-    ]);
-    return;
-  }
-
-  const diff = H - L;
-
-  show("marketSupportDiff",diff);
-
-  show("marketS318",H - diff * 0.318);
-  show("marketS50",H - diff * 0.5);
-  show("marketS618",H - diff * 0.618);
+function calcStockPressure(){
+ const B=num("stockLow");
+ if(!Number.isFinite(B)){clearShows(["stockP682","stockP50","stockP382"]);return;}
+ show("stockP682",B+B*0.682); show("stockP50",B+B*0.5); show("stockP382",B+B*0.382);
 }
-
-
-/* ② 大盤壓力 */
-
-function calcMarketPressure() {
-
-  const H = num("marketPressureH");
-  const L = num("marketPressureL");
-
-  if (!Number.isFinite(H) || !Number.isFinite(L)) {
-    clearShows([
-      "marketPressureDiff",
-      "marketP382",
-      "marketP50",
-      "marketP682"
-    ]);
-    return;
-  }
-
-  const diff = H - L;
-
-  show("marketPressureDiff",diff);
-
-  show("marketP382",L + diff * 0.382);
-  show("marketP50",L + diff * 0.5);
-  show("marketP682",L + diff * 0.682);
+function calcThird(){
+ const H=num("thirdH"), L=num("thirdL");
+ if(!Number.isFinite(H)||!Number.isFinite(L)){clearShows(["oneThird","twoThird"]);return;}
+ const range=H-L;
+ show("oneThird",L+range/3); show("twoThird",L+range*2/3);
 }
-
-
-/* ③ 個股支撐 */
-
-function calcStockSupport() {
-
-  const A = num("stockHigh");
-
-  if (!Number.isFinite(A)) {
-    clearShows([
-      "stockS318",
-      "stockS50",
-      "stockS618"
-    ]);
-    return;
-  }
-
-  show("stockS318",A - A * 0.318);
-  show("stockS50",A - A * 0.5);
-  show("stockS618",A - A * 0.618);
+function calcOpen(){
+ const close=num("openClose");
+ if(!Number.isFinite(close)){clearShows(["open2","open5"]);return;}
+ show("open2",close*0.02);
+ show("open5",close*0.05);
 }
-
-
-/* ③ 個股壓力 */
-
-function calcStockPressure() {
-
-  const B = num("stockLow");
-
-  if (!Number.isFinite(B)) {
-    clearShows([
-      "stockP682",
-      "stockP50",
-      "stockP382"
-    ]);
-    return;
-  }
-
-  show("stockP682",B + B * 0.682);
-  show("stockP50",B + B * 0.5);
-  show("stockP382",B + B * 0.382);
-}
-
-
-/* ④ 三分之一／三分之二 */
-
-function calcThird() {
-
-  const H = num("thirdH");
-  const L = num("thirdL");
-
-  if (!Number.isFinite(H) || !Number.isFinite(L)) {
-    clearShows(["oneThird","twoThird"]);
-    return;
-  }
-
-  const range = H - L;
-
-  show("oneThird",L + range / 3);
-  show("twoThird",L + range * 2 / 3);
-}
-
-
-/* ⑤ 開盤價的 2% / 5% */
-
-function calcOpen() {
-
-  const H = num("openHigh");
-  const L = num("openLow");
-
-  if (!Number.isFinite(H) || !Number.isFinite(L)) {
-    clearShows([
-      "openDiff",
-      "open2",
-      "open5"
-    ]);
-    return;
-  }
-
-  const diff = H - L;
-
-  show("openDiff",diff);
-  show("open2",diff * 0.02);
-  show("open5",diff * 0.05);
-}
-
 </script>
-
 </body>
 </html>
