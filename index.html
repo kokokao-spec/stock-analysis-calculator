@@ -130,7 +130,9 @@ input { width:100%; box-sizing:border-box; padding:12px; font-size:18px; border:
 </div>
 <div class="results">
 <div class="card"><div class="card-title">昨天的收盤價 × 2%（A）</div><div class="number" id="open2">—</div></div>
+<div class="card"><div class="card-title">昨天的收盤價 + A（C）</div><div class="number" id="openC">—</div></div>
 <div class="card"><div class="card-title">昨天的收盤價 × 5%（B）</div><div class="number" id="open5">—</div></div>
+<div class="card"><div class="card-title">昨天的收盤價 + B（D）</div><div class="number" id="openD">—</div></div>
 </div></div>
 </div>
 
@@ -180,9 +182,15 @@ function calcThird(){
 }
 function calcOpen(){
  const close=num("openClose");
- if(!Number.isFinite(close)){clearShows(["open2","open5"]);return;}
- show("open2",close*0.02);
- show("open5",close*0.05);
+ if(!Number.isFinite(close)){clearShows(["open2","openC","open5","openD"]);return;}
+ const A = close*0.02;
+ const B = close*0.05;
+ const C = close+A;
+ const D = close+B;
+ show("open2",A);
+ show("openC",C);
+ show("open5",B);
+ show("openD",D);
 }
 </script>
 </body>
